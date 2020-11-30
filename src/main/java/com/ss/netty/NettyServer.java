@@ -1,14 +1,13 @@
 package com.ss.netty;
 
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.sctp.nio.NioSctpServerChannel;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+
+import java.util.Date;
 
 public class NettyServer {
     public static void main(String[] args) throws InterruptedException {
@@ -30,8 +29,26 @@ public class NettyServer {
                         }
                     });
             System.out.println("....服务器 is ready");
-            ChannelFuture future = bootstrap.bind(6668).sync();
-            future.channel().closeFuture().sync();
+            ChannelFuture cf = bootstrap.bind(6668).sync();
+//            future.addListener(new ChannelFutureListener() {
+//                @Override
+//                public void operationComplete(ChannelFuture future) throws Exception {
+//                    if (future.isSuccess()) {
+//                        System.out.println(new Date() + ": 端口[" + 6668 + "]绑定成功");
+//                    }else {
+//                        System.out.println(new Date() + ": 端口[" + 6668 + "]绑定失败");
+//                    }
+//                }
+//            });
+
+            cf.addListener((future) -> {
+                if (future.isSuccess()) {
+                    System.out.println(new Date() + ": 端口[" + 6668 + "]绑定成功");
+                } else {
+                    System.out.println(new Date() + ": 端口[" + 6668 + "]绑定失败");
+                }
+            });
+            cf.channel().closeFuture().sync();
 
         } finally {
             bossGroup.shutdownGracefully();
