@@ -19,12 +19,14 @@ public class NettyServer {
             ServerBootstrap bootstrap = new ServerBootstrap();
 //        配置 bootstrap
             bootstrap.group(bossGroup, workerGroup)
-                    .channel(NioServerSocketChannel.class)  //使用NioServerSocketChannel 作为服务器的通道实现
-                    .option(ChannelOption.SO_BACKLOG, 128)
+                    .channel(NioServerSocketChannel.class)             //使用NioServerSocketChannel 作为服务器的通道实现
+                    .option(ChannelOption.SO_BACKLOG, 128)       // 服务器给BossGroup设置
                     .childOption(ChannelOption.SO_KEEPALIVE, true)
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
+                            ChannelPipeline pipeline = socketChannel.pipeline();
+//                            pipeline.addLast()
                             socketChannel.pipeline().addLast(new NettyServerHandler());
                         }
                     });
