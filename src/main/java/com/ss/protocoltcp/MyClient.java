@@ -1,4 +1,5 @@
-package com.ss.nettyinboundhandlerandoutboundhandler;
+package com.ss.protocoltcp;
+
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
@@ -11,8 +12,10 @@ public class MyClient {
 
         try {
             Bootstrap bootstrap = new Bootstrap();
-            bootstrap.group(group).channel(NioSocketChannel.class).handler(new MyClientInitializer());
-            ChannelFuture channelFuture = bootstrap.connect("localhost", 7001).sync();
+            bootstrap.group(group).channel(NioSocketChannel.class)
+                    .handler(new MyClientInitializer());
+            ChannelFuture channelFuture = bootstrap.
+                    connect("localhost", 7001).sync();
             channelFuture.channel().closeFuture().sync();
         } catch (Exception e) {
             e.printStackTrace();

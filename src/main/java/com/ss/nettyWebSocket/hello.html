@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    var socket;
+    // 判断当前浏览器支持 webSocket
+    if (window.WebSocket) {
+        socket = new WebSocket("ws://localhost:7000/hello");
+
+        socket.onmessage = function () {
+
+        }
+    } else {
+        alert("当前浏览器不支持websocket编程")
+    }
+</script>
+
+<form onsubmit="return false">
+    <textarea name="message" style="height: 300px;width: 300px"></textarea>
+    <input type="button" value="发送消息" onclick="send(this.form.message.value())">
+    <textarea id="responseText" style="height: 300px;width: 300px;"> </textarea>
+    <input type="button" value="清空内容" onclick="document.getElementById('responseText').value=''">
+</form>
+</body>
+</html>

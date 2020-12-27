@@ -23,7 +23,7 @@ public class MyByteToLongDecoder extends ByteToMessageDecoder {
 
         System.out.println("MyByteToLongDecoder  被调用");
         // 因为long 是8个字节
-        if (in.readableBytes() >= 2) {
+        if (in.readableBytes() >= 8) {
             out.add(in.readLong());
         }
     }
