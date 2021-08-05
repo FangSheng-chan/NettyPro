@@ -15,9 +15,17 @@
  */
 package com.ss.source.echo;
 
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.util.CharsetUtil;
+import io.netty.util.concurrent.DefaultEventExecutor;
+import io.netty.util.concurrent.DefaultEventExecutorGroup;
+import io.netty.util.concurrent.EventExecutorGroup;
+
+import java.nio.charset.Charset;
+import java.util.concurrent.Callable;
 
 /**
  * Handler implementation for the echo server.
@@ -25,9 +33,47 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 @Sharable
 public class EchoServerHandler extends ChannelInboundHandlerAdapter {
 
+    // group就是充当业务线程池，可以将任务提交到该线程池
+    // 这里我们创建了16个线程
+    static final EventExecutorGroup group = new DefaultEventExecutorGroup(16);
+
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        ctx.write(msg);
+        System.out.println("EchoServerHandler 的线程是 = " + Thread.currentThread().getName());
+//        ctx.channel().eventLoop().execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    Thread.sleep(5 * 1000);
+//                    System.out.println("EchoServerHandler execute 的线程是 =" + Thread.currentThread().getName());
+//                    ctx.writeAndFlush(Unpooled.copiedBuffer("hello,客户端", CharsetUtil.UTF_8));
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//
+//        ctx.channel().eventLoop().execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    Thread.sleep(5 * 1000);
+//                    System.out.println("EchoServerHandler execute 的线程2是 =" + Thread.currentThread().getName());
+//                    ctx.writeAndFlush(Unpooled.copiedBuffer("hello,客户端2", CharsetUtil.UTF_8));
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+
+        // 将任务提交到group 线程池
+        group.submit(new Callable<Object>() {
+            @Override
+            public Object call() throws Exception {
+                return null;
+            }
+        });
+        System.out.println("go on");
     }
 
     @Override

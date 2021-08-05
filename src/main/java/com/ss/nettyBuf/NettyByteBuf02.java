@@ -8,6 +8,10 @@ import java.nio.charset.Charset;
 
 public class NettyByteBuf02 {
     public static void main(String[] args) {
+
+        ByteBuf buffer = Unpooled.buffer(1024);
+        System.out.println(buffer.capacity());
+
         ByteBuf byteBuf = Unpooled.copiedBuffer("hello,world!", Charset.forName("utf-8"));
 
         byte[] array = byteBuf.array();
