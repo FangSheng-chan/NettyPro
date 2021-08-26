@@ -9,7 +9,6 @@ public class TestServerInitializer extends ChannelInitializer<SocketChannel> {
 
   @Override
   protected void initChannel(SocketChannel ch) throws Exception {
-
     // 向管道加入处理器
     // 得到管道
     ChannelPipeline pipeline = ch.pipeline();
