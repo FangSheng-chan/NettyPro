@@ -50,7 +50,7 @@ public class TestHttpServerHandler extends SimpleChannelInboundHandler<HttpObjec
       // 构造一个http的相应，即 httpResponse
       FullHttpResponse response =
           new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, content);
-      response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/plain");
+      response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/plain;charset=utf-8");
       response.headers().set(HttpHeaderNames.CONTENT_LENGTH, content.readableBytes());
       // 将构建好 response返回
       ctx.writeAndFlush(response);
