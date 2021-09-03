@@ -8,7 +8,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 
-public class HeartBeat {
+public class  HeartBeat {
     public static void main(String[] args) {
         NioEventLoopGroup bossGroup = new NioEventLoopGroup(1);
         NioEventLoopGroup workGroup = new NioEventLoopGroup();

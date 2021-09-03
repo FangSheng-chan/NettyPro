@@ -1,12 +1,11 @@
 package com.ss.nettyGroupChat2;
 
-import io.netty.bootstrap.Bootstrap;
+
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 
@@ -26,6 +25,7 @@ public class GroupChatServer2 {
             serverBootstrap.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
                     .handler(new LoggingHandler(LogLevel.INFO))
+                    .childHandler(null)
                     .option(ChannelOption.SO_BACKLOG, 128)
                     .childHandler(new GroupChatServerInit());
             System.out.println("netty 服务器启动");
